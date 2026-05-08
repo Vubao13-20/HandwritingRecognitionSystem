@@ -2,7 +2,7 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 import cv2
 import numpy as np
-from services.recognizer import HandwritingRecognizer
+from backend.services.recognizer import HandwritingRecognizer
 
 app = FastAPI()
 
@@ -15,8 +15,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Khởi tạo recognizer
-ai_engine = HandwritingRecognizer()
+# Khai báo biến chứa AI nhưng CHƯA khởi tạo ngay
+ai_engine = None
+
+# Hàm này đảm bảo AI CHỈ ĐƯỢC LOAD ĐÚNG 1 LẦN khi server đã bật xong
+@app.on_event("startup")
+def startup_event():
+    global ai_engine
+    print("Web đã khởi động, bắt đầu load model AI...")
+    ai_engine = HandwritingRecognizer()
 
 @app.post("/predict")
 async def predict_api(file: UploadFile = File(...)):
@@ -37,4 +44,5 @@ async def predict_api(file: UploadFile = File(...)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    # TẮT reload=True vì nó là khắc tinh của TensorFlow
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=False)

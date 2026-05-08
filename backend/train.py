@@ -170,7 +170,7 @@ try:
 			TrainingError.append(Error)
 
 			LogFile.write("Epoch %d, Batch: %d, Loss: %.6f, Error: %.6f, " % (epoch, batch, Loss, Error))
-
+			print(f" Epoch {epoch}/{cfg.NEpochs} - Batch {batch} | Loss hiện tại: {Loss:.4f} | Error: {Error:.4f}")
 			if currTrainLoss < Loss: LogFile.write("Bad\n")
 			else: LogFile.write("Good\n")
 

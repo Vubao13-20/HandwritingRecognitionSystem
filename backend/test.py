@@ -47,7 +47,8 @@ FilesList = LoadList(cfg.TEST_LIST)
 WND_SHIFT = WND_WIDTH - 2
 
 VEC_PER_WND = WND_WIDTH / math.pow(2, MPoolLayers_H)
-
+tf.keras.backend.clear_session()
+tf.compat.v1.reset_default_graph()
 phase_train = tf.Variable(True, name='phase_train')
 
 x = tf.placeholder(tf.float32, shape=[None, WND_HEIGHT, WND_WIDTH])

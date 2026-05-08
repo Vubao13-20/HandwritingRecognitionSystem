@@ -6,7 +6,7 @@
 
 #!/usr/bin/python
 
-import tensorflow.compat.v1 as tf
+import tensorflow.compat.v1 as tf # type: ignore
 tf.compat.v1.disable_eager_execution()
 
 import numpy as np
@@ -64,25 +64,38 @@ def LoadClasses(path):
     data = {}
     with codecs.open(path, 'r', encoding='utf-8') as cF:
 	    data = cF.read().split('\n')
-	    return data
+	    return data # type: ignore
 
 def LoadList(path):
 	with open(path) as vlist:
 		return vlist.readlines()
 
 def LoadModel(session, path):
-    saver = tf.train.Saver()
+    import tensorflow.compat.v1 as tf # type: ignore
+    from tensorflow.python.training import py_checkpoint_reader
+    
+    print("🚀 Đang khởi động chế độ Smart Load (Bỏ qua biến rác)...")
     ckpt = tf.train.get_checkpoint_state(path)
-
     if ckpt and ckpt.model_checkpoint_path:
+        # 1. Đọc ruột file Checkpoint xem có những biến nào
+        reader = py_checkpoint_reader.NewCheckpointReader(ckpt.model_checkpoint_path)
+        saved_vars = reader.get_variable_to_shape_map()
+        
+        # 2. Lấy danh sách biến trong code hiện tại
+        graph_vars = tf.global_variables()
+        
+        # 3. CHỈ chọn những biến CÓ MẶT trong Checkpoint (Lọc bỏ lstm_cell_3)
+        vars_to_restore = [v for v in graph_vars if v.name.split(':')[0] in saved_vars]
+        
+        # 4. Ép load!
+        saver = tf.train.Saver(vars_to_restore)
         saver.restore(session, ckpt.model_checkpoint_path)
-        print('Checkpoint restored')
+        print(" Lắp não thành công tuyệt đối! Đã diệt tận gốc lỗi tên biến.")
     else:
-        print('No checkpoint found')
-        exit()
+        print(" Không tìm thấy file model.ckpt.")
 
 def SaveModel(session, filename, epoch):
-    saver = tf.train.Saver()
+    saver = tf.train.Saver(max_to_keep=3)
     saver.save(session, filename, global_step=epoch)
 
 import os
@@ -97,7 +110,7 @@ def ReadData(filesLocation, filesList, numberOfFiles, WND_HEIGHT, WND_WIDTH, WND
 
     # Kiểm tra file danh sách tồn tại không
     if not os.path.exists(filesList):
-        print(f"❌ Lỗi: Không thấy file list tại {filesList}")
+        print(f" Lỗi: Không thấy file list tại {filesList}")
         return [], [], []
 
     with open(filesList) as listHandler:

@@ -68,7 +68,7 @@ flags.DEFINE_integer('BatchSize', 10, 'Batch size') #This is actually the number
 flags.DEFINE_boolean('RandomBatches', True, 'Randomize the order of batches each epoch')
 flags.DEFINE_integer('MaxGradientNorm', 5, 'Maximum gradient norm')
 flags.DEFINE_integer('SaveEachNEpochs', 1, 'Save model each n epochs')
-flags.DEFINE_integer('NEpochs', 1000000, 'Run the training for n epochs')
+flags.DEFINE_integer('NEpochs', , 'Run the training for n epochs')
 flags.DEFINE_integer('TrainThreshold', 20, 'Stop the training after n epochs with no improvement on validation')
 
 cfg = flags.FLAGS
