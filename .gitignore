@@ -1,0 +1,19 @@
+notes.txt
+*.pyc
+model
+summary
+clean.sh
+log
+# Bỏ qua môi trường ảo và cache của Python
+backend/venv/
+backend/__pycache__/
+*.pyc
+
+# Bỏ qua thư viện của Frontend
+frontend/node_modules/
+frontend/.next/
+
+# DỮ LIỆU ẢNH (Quan trọng)
+# Nếu thư mục samples của bạn nặng hơn 100MB, GitHub sẽ chặn không cho push. 
+# Nếu nó quá nặng, hãy bỏ comment (xóa dấu #) ở dòng dưới để không push thư mục này lên:
+samples/Images/
