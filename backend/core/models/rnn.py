@@ -14,8 +14,6 @@ NClasses = len(Classes)
 
 def RNN(Inputs, SeqLens, Scope):
     with tf.variable_scope(Scope):
-        ################################################################
-        # Construct batch sequences for LSTM (Giữ nguyên logic của bạn)
         maxLen = tf.reduce_max(SeqLens, 0)
 
         n = 0; offset = 0
@@ -52,9 +50,6 @@ def RNN(Inputs, SeqLens, Scope):
 
         i, Inputs = tf.while_loop(condition, body, [i, Inputs], 
                                   shape_invariants=[i.get_shape(), tf.TensorShape([None, cfg.BatchSize, NFeatures])])
-        
-       ###############################################################
-        # Construct LSTM layers - FIX LỖI TIME_MAJOR TRÊN KERAS 3
 
         initializer = tf2.initializers.GlorotUniform()
 

@@ -1,7 +1,12 @@
 # Handwriting Recognition System
 
-#chay file 
+<!-- #chay file 
 #mở terminal: python -m backend.train
+#sau khi train mô đồ trên colab thì tải model về gồn 4 file : Copy 4 file bạn tải từ Google Drive về (gồm 3 file data/meta/index và 1 file checkpoint) ném thẳng vào cái thư mục model vừa được dọn sạch đó.
+#đổi đường dẫn file checkpoin kiểu như thế này  -->
+<!-- model_checkpoint_path: "model_backup-229"
+all_model_checkpoint_paths: "model_backup-229" -->
+<!-- NHỚ XÓA SẠCH FILE MODEL TRƯỚC KHI DÁN 4 FILE KIA VÀO VÀ CHẠY -->
 
 This repository is the Tensorflow implementation of the Handwriting Recognition System described in [Handwriting Recognition of Historical Documents with Few Labeled Data](https://www.researchgate.net/publication/325993975_Handwriting_Recognition_of_Historical_Documents_with_Few_Labeled_Data) (please cite the paper if you use this code in your research paper). This code was also used for the baseline system in [Fine-tuning Handwriting Recognition systems with Temporal Dropout](https://www.researchgate.net/publication/348958179_Fine-tuning_Handwriting_Recognition_systems_with_Temporal_Dropout).
 

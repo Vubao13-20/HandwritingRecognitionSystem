@@ -47,7 +47,6 @@ class HandwritingRecognizer:
             return "Lỗi: Không nhận được ảnh từ Web."
 
         try:
-            # --- 1. NHÀO NẶN ẢNH ĐÚNG KHẨU VỊ CỦA AI ---
             gray = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
             h, w = gray.shape
             

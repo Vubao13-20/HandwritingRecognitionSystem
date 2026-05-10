@@ -84,7 +84,6 @@ optimizer = tf.train.AdamOptimizer(learning_rate=cfg.LearningRate)
 
 train_step = optimizer.apply_gradients(zip(grad, tvars))
 
-#These values are used to draw performance graphs. Updated after each epoch.
 OverallTrainingLoss = tf.Variable(0, name='OverallTrainingLoss', dtype=tf.float32)
 OverallTrainingError = tf.Variable(0, name='OverallTrainingError', dtype=tf.float32)
 OverallValidationLoss = tf.Variable(0, name='OverallValidationLoss', dtype=tf.float32)
@@ -94,13 +93,10 @@ OverallTrainingError_s = tf.summary.scalar('OverallTrainingError', OverallTraini
 OverallValidationLoss_s = tf.summary.scalar('OverallValidationLoss', OverallValidationLoss)
 OverallValidationError_s = tf.summary.scalar('OverallValidationError', OverallValidationError)
 
-#Reading training data...
 inputList, seqLens, targetList = ReadData(cfg.TRAIN_LOCATION, cfg.TRAIN_LIST, cfg.TRAIN_NB, WND_HEIGHT, WND_WIDTH, WND_SHIFT, VEC_PER_WND, cfg.TRAIN_TRANS)
 
-#Reading validation data...
 if (cfg.VAL_NB > 0): inputListVal, seqLensVal, targetListVal = ReadData(cfg.VAL_LOCATION, cfg.VAL_LIST, cfg.VAL_NB, WND_HEIGHT, WND_WIDTH, WND_SHIFT, VEC_PER_WND, cfg.VAL_TRANS)
 
-# Starting everything...
 LogFile.write("Initializing...\n\n")
 LogFile.flush()
 
